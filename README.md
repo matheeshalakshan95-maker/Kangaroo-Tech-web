@@ -20,11 +20,18 @@ Bootstrap Icons) but with:
 - A custom design system (`src/assets/css/theme.css`) in the requested palette — dark navy,
   electric blue, white, light grey, with a small green accent — replacing the template's
   orange branding.
-- A text + monogram logo and an SVG favicon (no dependency on the old raster logo, which had
-  "SoluTek" text embedded in the image).
+- A gradient "K" monogram logo (`LogoMark.jsx`) recreated as a scalable inline SVG — purple-to-blue
+  gradient, animated swoosh accent — matching the provided logo concept, used in the header,
+  footer and favicon. No dependency on the old raster logo, which had "SoluTek" text embedded
+  in the image.
 - All iconography via Bootstrap Icons (vector, recolourable) instead of the template's broken
   or off-brand PNG icons.
 - Entirely new, original copy for every page — no template/Solutek placeholder text remains.
+- A site-wide motion system (Framer Motion + a lightweight scroll-reveal hook): animated hero
+  entrance, animated counters, animated gradient/blob backgrounds, page transitions on route
+  change, button hover shine, and scroll-triggered card/section reveals. All motion respects
+  `prefers-reduced-motion`, and reveal has a safety-net timeout so content is never permanently
+  hidden if the observer doesn't fire (see QA notes below).
 
 ### Pages Built
 
@@ -57,18 +64,30 @@ Bootstrap Icons) but with:
 
 ```
 src/
-  assets/css/theme.css        Design system (colours, typography, components)
+  assets/css/theme.css        Design system (colours, typography, components, motion/keyframes)
+  hooks/useScrollReveal.js    Site-wide scroll-reveal (IntersectionObserver + fallback timeout)
   Components/
     Header/Header.jsx         Sticky nav with mobile menu overlay
     Footer/Footer.jsx
-    Common/                   Logo, Seo (per-page title/meta), PageHeader, CtaSection
+    Common/                   Logo, LogoMark (SVG monogram), Seo, PageHeader, CtaSection,
+                               AnimatedCounter
     Home/                     Home-page-only sections (Hero, TrustSection, etc.)
     Contact/ContactForm.jsx   Validated enquiry form
   Data/                       services.js, projects.js (content data)
-  Layouts/Main.jsx            Header + <Outlet/> + Footer
+  Layouts/Main.jsx            Header + animated <Outlet/> (page transitions) + Footer
   Pages/                      One file per route
   Routes/Routes.jsx           React Router route table
+
+preview/demo.html              Self-contained static HTML/CSS/JS preview (see below)
 ```
+
+## Static HTML Demo (No Build Required)
+
+`preview/demo.html` is a **self-contained, single-file** preview of the new logo and motion
+system — open it directly in any browser (double-click, or `open preview/demo.html`). It needs
+no `npm install`, no dev server, and makes no external network requests (fonts, icons and the
+logo are all inline SVG/CSS). It's a condensed single-page version of the Home page design for
+quick visual sign-off; the live React app is the full, multi-page, production site.
 
 ## How to Run Locally
 
@@ -108,7 +127,10 @@ files:
   Pricing, Contact, NotFound
 - `src/Data/services.js`, `src/Data/projects.js`
 - `src/assets/css/theme.css`
-- `public/favicon.svg`
+- `src/Components/Common/LogoMark.jsx`, `src/Components/Common/AnimatedCounter.jsx`,
+  `src/hooks/useScrollReveal.js` — new logo, animated counters, scroll-reveal motion
+- `public/favicon.svg` — regenerated to match the new gradient K-monogram
+- `preview/demo.html` — new standalone static preview
 - Removed: all root-level template files (`*.jsx`, `*.png`, `*.css`, `bootstrap.min2.js`,
   `jquery-2.1.4.min2.js`, `other.js`, `custom.js`) that were either broken, off-brand, or
   superseded by the new `src/` structure.
@@ -124,6 +146,16 @@ files:
   valid submission shows a success confirmation.
 - Verified client-side routing (React Router) serves the SPA correctly on direct navigation
   and on unknown routes (404 page).
+- Verified the new mobile navigation overlay renders correctly (a `position: sticky` header
+  turned out to establish a containing block for `position: fixed` descendants in Chromium,
+  which was collapsing the mobile menu to zero height — fixed by moving the mobile nav to be a
+  sibling of the header rather than a child).
+- Verified the scroll-reveal system with a fallback: since it's `IntersectionObserver`-driven,
+  content could theoretically stay invisible if the observer never fires (e.g. some automated
+  renderers). A 4-second safety-net timeout force-reveals anything not yet visible, so no
+  content is ever permanently hidden regardless of environment.
+- `preview/demo.html` verified separately in a real browser: no console errors, animations,
+  scroll reveal and the mobile nav overlay all confirmed working.
 
 ## Remaining Recommendations
 
