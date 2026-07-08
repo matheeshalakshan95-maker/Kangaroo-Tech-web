@@ -175,6 +175,29 @@
   @keyframes gradient-drift { 0%,100%{background-position:0% 0%;} 50%{background-position:100% 100%;} }
   .hero-grid { position: absolute; inset: 0; opacity: .08; background-image: linear-gradient(rgba(255,255,255,.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.5) 1px, transparent 1px); background-size: 46px 46px; }
   .hero .wrap { position: relative; z-index: 1; }
+
+  .hero-spotlight {
+    position: absolute; inset: 0; pointer-events: none; z-index: 0;
+    background: radial-gradient(500px circle at var(--sx, 50%) var(--sy, 30%), rgba(155, 63, 251, 0.25), transparent 60%);
+  }
+  .hero-blob { position: absolute; border-radius: 50%; pointer-events: none; z-index: 0; opacity: .55; filter: blur(2px); }
+  .hero-blob.b1 { width: 260px; height: 260px; top: 8%; right: 12%; background: radial-gradient(circle, rgba(155,63,251,.5), transparent 70%); animation: float-1 11s ease-in-out infinite; }
+  .hero-blob.b2 { width: 200px; height: 200px; bottom: 10%; left: 6%; background: radial-gradient(circle, rgba(31,191,117,.4), transparent 70%); animation: float-2 13s ease-in-out infinite; }
+  .hero-blob.b3 { width: 160px; height: 160px; top: 44%; right: 30%; background: radial-gradient(circle, rgba(11,95,255,.4), transparent 70%); animation: float-3 9s ease-in-out infinite; }
+  @keyframes float-1 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-30px,26px) scale(1.12);} }
+  @keyframes float-2 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(24px,-22px) scale(1.08);} }
+  @keyframes float-3 { 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-18px,-18px) scale(.92);} }
+  @media (max-width: 767px) { .hero-blob { display: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-blob { animation: none; } .hero-spotlight { display: none; } }
+
+  h1 .accent.shimmer {
+    background: linear-gradient(110deg, #b79bff 20%, #7db2ff 40%, #9b3ffb 60%, #b79bff 80%);
+    background-size: 250% 100%; -webkit-background-clip: text; background-clip: text; color: transparent;
+    animation: text-shimmer 6s linear infinite;
+  }
+  @keyframes text-shimmer { to { background-position: -250% 0; } }
+  @media (prefers-reduced-motion: reduce) { h1 .accent.shimmer { animation: none; } }
+
   .hero-split { display: grid; grid-template-columns: 1.05fr 0.85fr; gap: 60px; align-items: center; }
   @media (max-width: 980px) { .hero-split { grid-template-columns: 1fr; } }
 
@@ -196,13 +219,14 @@
     .hero::before { animation: none; }
   }
 
+  .hero-panel-tilt { transition: transform .1s ease-out; }
   .hero-panel {
     background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.14); border-radius: 18px; padding: 28px;
     backdrop-filter: blur(6px); opacity: 0; transform: translateY(24px) scale(.97);
     animation: rise-panel .6s cubic-bezier(.16,.84,.44,1) .5s forwards;
   }
   @keyframes rise-panel { to { opacity: 1; transform: translateY(0) scale(1); } }
-  @media (prefers-reduced-motion: reduce) { .hero-panel { animation: none; opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) { .hero-panel { animation: none; opacity: 1; transform: none; } .hero-panel-tilt { transition: none; } }
   .row-line { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.1); }
   .row-line:last-child, .row-line.tight { border-bottom: none; }
   .row-line .label { color: rgba(255,255,255,.65); font-size: 13.5px; }
@@ -244,6 +268,24 @@
   .card:hover { box-shadow: var(--shadow-lg); transform: translateY(-5px); border-color: transparent; }
   .card-icon { width: 50px; height: 50px; border-radius: 12px; background: linear-gradient(135deg, var(--purple), var(--blue)); color: #fff; display: flex; align-items: center; justify-content: center; margin-bottom: 18px; transition: transform .35s cubic-bezier(.2,.8,.2,1); }
   .card:hover .card-icon { transform: scale(1.1) rotate(-4deg); }
+  .card, .trust-item { position: relative; }
+  .card::after, .trust-item::after {
+    content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+    background: linear-gradient(135deg, var(--purple), var(--blue), var(--green));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .3s ease; pointer-events: none;
+  }
+  .card:hover::after, .trust-item:hover::after { opacity: 1; }
+
+  /* ---------- Capability marquee ---------- */
+  .marquee { overflow: hidden; padding: 26px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+  .marquee-track { display: flex; width: max-content; gap: 14px; animation: marquee-scroll 32s linear infinite; }
+  .marquee:hover .marquee-track { animation-play-state: paused; }
+  .marquee-chip { display: flex; align-items: center; gap: 9px; white-space: nowrap; padding: 10px 20px; border-radius: 999px; border: 1px solid var(--border); background: var(--bg); font-size: 13.5px; font-weight: 700; }
+  .marquee-chip svg { color: var(--blue); }
+  @keyframes marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .marquee-track { animation: none; overflow-x: auto; } }
   .card h3 { font-size: 18px; margin-bottom: 8px; }
   .card p { font-size: 14.5px; }
 
@@ -335,15 +377,15 @@
     <a class="logo" href="#top">
       <svg class="logomark" width="38" height="38" viewBox="0 0 100 100" aria-hidden="true">
         <defs>
-          <linearGradient id="lg1" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#3b6dff"/><stop offset="100%" stop-color="#0b5fff"/>
+          <linearGradient id="lg1" gradientUnits="userSpaceOnUse" x1="30" y1="0" x2="70" y2="100">
+            <stop offset="0%" stop-color="#9b3ffb"/><stop offset="45%" stop-color="#6d4bf5"/><stop offset="100%" stop-color="#1470ff"/>
           </linearGradient>
         </defs>
-        <rect x="4" y="4" width="92" height="92" rx="22" fill="url(#lg1)"/>
-        <g stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none">
-          <path d="M32 22 L32 78"/><path d="M32 50 L70 22"/><path d="M32 50 L70 78"/>
+        <g stroke="url(#lg1)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none">
+          <path d="M30 12 L30 88"/><path d="M30 51 L76 12"/><path d="M30 51 L76 90"/>
         </g>
-        <path class="swoosh" d="M14 66 C 40 74, 54 40, 92 18" stroke="#fff" stroke-opacity=".92" stroke-width="4.5" stroke-linecap="round" fill="none"/>
+        <path d="M12 70 C 38 79, 52 44, 90 22" stroke="#2c46d6" stroke-opacity=".35" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <path class="swoosh" d="M10 64 C 38 73, 52 38, 92 16" stroke="#fff" stroke-opacity=".96" stroke-width="5.5" stroke-linecap="round" fill="none"/>
       </svg>
       <span class="logo-word">
         <span>Kangaro<span class="accent">Tech</span></span>
@@ -377,11 +419,15 @@
 
 <section class="hero" id="top">
   <div class="hero-grid"></div>
+  <div class="hero-spotlight" id="heroSpotlight"></div>
+  <div class="hero-blob b1"></div>
+  <div class="hero-blob b2"></div>
+  <div class="hero-blob b3"></div>
   <div class="wrap">
     <div class="hero-split">
       <div>
         <span class="eyebrow"><span style="width:6px;height:6px;border-radius:50%;background:var(--green);display:inline-block;"></span> Australia &bull; Sri Lanka Technology Partnership</span>
-        <h1>Build Smarter Digital Solutions with <span class="accent">KANGARO TECH</span></h1>
+        <h1>Build Smarter Digital Solutions with <span class="accent shimmer">KANGARO TECH</span></h1>
         <p class="lead">Australian-standard software, AI, SaaS, web development and digital marketing powered by expert Sri Lankan technology teams.</p>
         <div class="hero-actions">
           <a href="#contact" class="btn btn-primary">Get a Free Consultation
@@ -395,18 +441,24 @@
           <div class="stat"><h3>AI-Ready</h3><span>Built for automation from day one</span></div>
         </div>
       </div>
-      <div class="hero-panel">
-        <div class="row-line"><span class="label">Project Delivery Standard</span><span class="value">Australian Business Grade</span></div>
-        <div class="row-line"><span class="label">Engineering Team</span><span class="value">Sri Lankan Technology Experts</span></div>
-        <div class="row-line"><span class="label">Flagship Product</span><span class="value">CIMA Biz AI (In Development)</span></div>
-        <div style="margin-top:18px;">
-          <div class="row-line tight"><span class="label">Development Cost Efficiency</span><span class="value">High</span></div>
-          <div class="bar" id="heroBar"><span></span></div>
+      <div class="hero-panel-tilt" id="heroTilt">
+        <div class="hero-panel">
+          <div class="row-line"><span class="label">Project Delivery Standard</span><span class="value">Australian Business Grade</span></div>
+          <div class="row-line"><span class="label">Engineering Team</span><span class="value">Sri Lankan Technology Experts</span></div>
+          <div class="row-line"><span class="label">Flagship Product</span><span class="value">CIMA Biz AI (In Development)</span></div>
+          <div style="margin-top:18px;">
+            <div class="row-line tight"><span class="label">Development Cost Efficiency</span><span class="value">High</span></div>
+            <div class="bar" id="heroBar"><span></span></div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
+<div class="marquee">
+  <div class="marquee-track" id="marqueeTrack"></div>
+</div>
 
 <section>
   <div class="wrap">
@@ -540,9 +592,8 @@
       <div>
         <a class="logo" href="#top" style="color:#fff;margin-bottom:14px;">
           <svg class="logomark" width="34" height="34" viewBox="0 0 100 100" aria-hidden="true">
-            <rect x="4" y="4" width="92" height="92" rx="22" fill="url(#lg1)"/>
-            <g stroke="#fff" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" fill="none">
-              <path d="M32 22 L32 78"/><path d="M32 50 L70 22"/><path d="M32 50 L70 78"/>
+            <g stroke="url(#lg1)" stroke-width="14" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <path d="M30 12 L30 88"/><path d="M30 51 L76 12"/><path d="M30 51 L76 90"/>
             </g>
           </svg>
           <span class="logo-word"><span>Kangaro<span class="accent">Tech</span></span></span>
@@ -614,6 +665,60 @@
     // Hero progress bar fill
     var heroBar = document.getElementById('heroBar');
     requestAnimationFrame(function () { heroBar.classList.add('filled'); });
+
+    // Hero cursor spotlight + tilt panel
+    var heroSection = document.querySelector('.hero');
+    var spotlight = document.getElementById('heroSpotlight');
+    var tilt = document.getElementById('heroTilt');
+    if (heroSection && !prefersReduced) {
+      heroSection.addEventListener('mousemove', function (e) {
+        var rect = heroSection.getBoundingClientRect();
+        var x = (e.clientX - rect.left) / rect.width;
+        var y = (e.clientY - rect.top) / rect.height;
+        spotlight.style.setProperty('--sx', (x * 100) + '%');
+        spotlight.style.setProperty('--sy', (y * 100) + '%');
+        if (tilt) {
+          var rx = (0.5 - y) * 14;
+          var ry = (x - 0.5) * 14;
+          tilt.style.transform = 'perspective(1000px) rotateX(' + rx + 'deg) rotateY(' + ry + 'deg)';
+        }
+      });
+      heroSection.addEventListener('mouseleave', function () {
+        if (tilt) tilt.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    // Capability marquee
+    var capabilities = [
+      ['AI Automation', 'M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'],
+      ['SaaS Platforms', 'M7 17a4 4 0 01-1-7.9A5 5 0 0116 8a4 4 0 011 7.9'],
+      ['UI/UX Design', 'M12 3v3M12 18v3M3 12h3M18 12h3'],
+      ['Mobile Apps', 'M7 4h10v16H7z'],
+      ['Digital Marketing', 'M3 11l18-7-7 18-2-8-8-3z'],
+      ['IT Outsourcing', 'M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2'],
+      ['SEO', 'M11 19a8 8 0 100-16 8 8 0 000 16zM21 21l-4.35-4.35'],
+      ['Google Ads', 'M3 11l18-7-7 18-2-8-8-3z'],
+      ['Process Automation', 'M12 2l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1z'],
+      ['Website Development', 'M3 4h18v16H3zM3 9h18'],
+    ];
+    var track = document.getElementById('marqueeTrack');
+    if (track) {
+      var chipsHtml = capabilities.concat(capabilities).map(function (c) {
+        return '<span class="marquee-chip"><svg class="icon" viewBox="0 0 24 24" style="width:16px;height:16px;"><path d="' + c[1] + '"/></svg>' + c[0] + '</span>';
+      }).join('');
+      track.innerHTML = chipsHtml;
+    }
+
+    // Lightweight scroll parallax for the CIMA mock panel
+    var cimaMock = document.querySelector('.cima-mock');
+    if (cimaMock && !prefersReduced) {
+      window.addEventListener('scroll', function () {
+        var rect = cimaMock.getBoundingClientRect();
+        var progress = (window.innerHeight - rect.top) / (window.innerHeight + rect.height);
+        var y = (progress - 0.5) * 40;
+        cimaMock.style.transform = 'translateY(' + y + 'px)';
+      }, { passive: true });
+    }
 
     // Animated counters
     function animateCounter(el) {

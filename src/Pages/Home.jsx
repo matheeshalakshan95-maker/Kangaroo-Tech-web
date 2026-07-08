@@ -1,5 +1,6 @@
 import Seo from '../Components/Common/Seo';
 import Hero from '../Components/Home/Hero';
+import CapabilityMarquee from '../Components/Home/CapabilityMarquee';
 import TrustSection from '../Components/Home/TrustSection';
 import ServicesOverview from '../Components/Home/ServicesOverview';
 import CimaHighlight from '../Components/Home/CimaHighlight';
@@ -16,6 +17,7 @@ const Home = () => {
         description="KANGARO TECH builds websites, software, SaaS platforms and AI-integrated systems for Australian businesses, combining Australian standards with expert Sri Lankan technology teams."
       />
       <Hero />
+      <CapabilityMarquee />
       <TrustSection />
       <ServicesOverview />
       <CimaHighlight />

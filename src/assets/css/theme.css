@@ -138,7 +138,7 @@ button { font-family: var(--kt-font); }
 .kt-logo-tagline { display: block; font-size: 10.5px; font-weight: 600; letter-spacing: 0.06em; color: var(--kt-grey-600); text-transform: uppercase; }
 .kt-footer .kt-logo-tagline { color: rgba(255,255,255,0.55); }
 
-.kt-logomark { flex-shrink: 0; filter: drop-shadow(0 6px 16px rgba(11,95,255,0.28)); transition: transform 0.35s cubic-bezier(.2,.8,.2,1); }
+.kt-logomark { flex-shrink: 0; transition: transform 0.35s cubic-bezier(.2,.8,.2,1); }
 .kt-logo:hover .kt-logomark { transform: rotate(-6deg) scale(1.06); }
 .kt-logomark.animated .kt-logomark-swoosh {
   stroke-dasharray: 130;
@@ -469,3 +469,62 @@ textarea.kt-form-control { resize: vertical; min-height: 140px; }
 
 /* ---------- Page transition ---------- */
 .kt-page-motion { width: 100%; }
+
+/* ---------- Hero: spotlight + floating blobs + tilt panel ---------- */
+.kt-hero { perspective: 1400px; }
+.kt-hero-spotlight {
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background: radial-gradient(500px circle at var(--sx, 50%) var(--sy, 30%), rgba(155, 63, 251, 0.22), transparent 60%);
+  transition: background 0.1s ease-out;
+}
+.kt-hero-blob {
+  position: absolute; border-radius: 50%; filter: blur(2px); pointer-events: none; z-index: 0; opacity: 0.55;
+  background: radial-gradient(circle, rgba(155,63,251,0.5), transparent 70%);
+}
+.kt-hero-blob.b1 { width: 260px; height: 260px; top: 8%; right: 12%; animation: kt-float-1 11s ease-in-out infinite; }
+.kt-hero-blob.b2 { width: 200px; height: 200px; bottom: 10%; left: 6%; background: radial-gradient(circle, rgba(31,191,117,0.4), transparent 70%); animation: kt-float-2 13s ease-in-out infinite; }
+.kt-hero-blob.b3 { width: 160px; height: 160px; top: 44%; right: 30%; background: radial-gradient(circle, rgba(11,95,255,0.4), transparent 70%); animation: kt-float-3 9s ease-in-out infinite; }
+@keyframes kt-float-1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-30px, 26px) scale(1.12); } }
+@keyframes kt-float-2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(24px, -22px) scale(1.08); } }
+@keyframes kt-float-3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-18px, -18px) scale(0.92); } }
+@media (prefers-reduced-motion: reduce) {
+  .kt-hero-blob { animation: none; }
+  .kt-hero-spotlight { display: none; }
+}
+@media (max-width: 767px) {
+  .kt-hero-blob { display: none; }
+}
+
+/* ---------- Gradient shimmer headline ---------- */
+.kt-hero h1 span.shimmer {
+  background: linear-gradient(110deg, #b79bff 20%, #7db2ff 40%, #9b3ffb 60%, #b79bff 80%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  animation: kt-text-shimmer 6s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) { .kt-hero h1 span.shimmer { animation: none; } }
+@keyframes kt-text-shimmer { to { background-position: -250% 0; } }
+
+/* ---------- Card glow border on hover ---------- */
+.kt-card, .kt-trust-item, .kt-project-card, .kt-price-card { position: relative; }
+.kt-card::after, .kt-trust-item::after, .kt-project-card::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px;
+  background: linear-gradient(135deg, var(--kt-purple), var(--kt-blue), var(--kt-green));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity 0.3s ease; pointer-events: none;
+}
+.kt-card:hover::after, .kt-trust-item:hover::after, .kt-project-card:hover::after { opacity: 1; }
+
+/* ---------- Capability marquee ---------- */
+.kt-marquee { overflow: hidden; padding: 30px 0; border-top: 1px solid var(--kt-grey-200); border-bottom: 1px solid var(--kt-grey-200); }
+.kt-marquee-track { display: flex; width: max-content; gap: 14px; animation: kt-marquee-scroll 32s linear infinite; }
+.kt-marquee:hover .kt-marquee-track { animation-play-state: paused; }
+.kt-marquee-chip {
+  display: flex; align-items: center; gap: 9px; white-space: nowrap; padding: 10px 20px;
+  border-radius: 999px; border: 1px solid var(--kt-grey-200); background: var(--kt-white);
+  font-size: 13.5px; font-weight: 700; color: var(--kt-navy);
+}
+.kt-marquee-chip i { color: var(--kt-blue); font-size: 16px; }
+@keyframes kt-marquee-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .kt-marquee-track { animation: none; overflow-x: auto; } }

@@ -1,5 +1,6 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import AnimatedCounter from '../Common/AnimatedCounter';
 
 const container = {
@@ -13,9 +14,44 @@ const item = {
 };
 
 const Hero = () => {
+  const heroRef = useRef(null);
+  const spotlightRef = useRef(null);
+
+  const px = useMotionValue(0.5);
+  const py = useMotionValue(0.5);
+  const rotateX = useSpring(useTransform(py, [0, 1], [7, -7]), { stiffness: 120, damping: 16 });
+  const rotateY = useSpring(useTransform(px, [0, 1], [-7, 7]), { stiffness: 120, damping: 16 });
+
+  const handleMouseMove = (e) => {
+    const rect = heroRef.current.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    if (spotlightRef.current) {
+      spotlightRef.current.style.setProperty('--sx', `${x * 100}%`);
+      spotlightRef.current.style.setProperty('--sy', `${y * 100}%`);
+    }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    px.set(x);
+    py.set(y);
+  };
+
+  const handleMouseLeave = () => {
+    px.set(0.5);
+    py.set(0.5);
+  };
+
   return (
-    <section className="kt-hero kt-bg-navy">
+    <section
+      ref={heroRef}
+      className="kt-hero kt-bg-navy"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
       <div className="kt-hero-grid"></div>
+      <div ref={spotlightRef} className="kt-hero-spotlight"></div>
+      <div className="kt-hero-blob b1"></div>
+      <div className="kt-hero-blob b2"></div>
+      <div className="kt-hero-blob b3"></div>
       <div className="kt-container">
         <div className="kt-split">
           <motion.div variants={container} initial="hidden" animate="show">
@@ -24,7 +60,7 @@ const Hero = () => {
               Australia &bull; Sri Lanka Technology Partnership
             </motion.span>
             <motion.h1 variants={item}>
-              Build Smarter Digital Solutions with <span>KANGARO TECH</span>
+              Build Smarter Digital Solutions with <span className="shimmer">KANGARO TECH</span>
             </motion.h1>
             <motion.p variants={item} className="lead">
               Australian-standard software, AI, SaaS, web development and digital marketing
@@ -59,6 +95,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 26, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.6, delay: 0.25, ease: [0.16, 0.84, 0.44, 1] }}
+            style={{ rotateX, rotateY, transformStyle: 'preserve-3d' }}
           >
             <div className="row-line">
               <span className="label">Project Delivery Standard</span>

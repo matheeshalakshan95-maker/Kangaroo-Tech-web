@@ -20,10 +20,10 @@ Bootstrap Icons) but with:
 - A custom design system (`src/assets/css/theme.css`) in the requested palette — dark navy,
   electric blue, white, light grey, with a small green accent — replacing the template's
   orange branding.
-- A gradient "K" monogram logo (`LogoMark.jsx`) recreated as a scalable inline SVG — purple-to-blue
-  gradient, animated swoosh accent — matching the provided logo concept, used in the header,
-  footer and favicon. No dependency on the old raster logo, which had "SoluTek" text embedded
-  in the image.
+- A gradient "K" monogram logo (`LogoMark.jsx`), recreated as a scalable inline SVG to match the
+  supplied logo artwork — vertical purple-to-blue gradient stroke, layered white/blue swoosh
+  accent, standalone glyph (no background tile) — used in the header, footer and favicon. No
+  dependency on the old raster logo, which had "SoluTek" text embedded in the image.
 - All iconography via Bootstrap Icons (vector, recolourable) instead of the template's broken
   or off-brand PNG icons.
 - Entirely new, original copy for every page — no template/Solutek placeholder text remains.
@@ -32,6 +32,11 @@ Bootstrap Icons) but with:
   change, button hover shine, and scroll-triggered card/section reveals. All motion respects
   `prefers-reduced-motion`, and reveal has a safety-net timeout so content is never permanently
   hidden if the observer doesn't fire (see QA notes below).
+- A premium "agentic AI SaaS" motion layer on the Home hero, inspired by the energy of
+  category-leading automation/AI platform marketing sites: a cursor-reactive spotlight glow,
+  floating parallax blobs, a mouse-tilt 3D hero panel, a gradient shimmer headline, a scrolling
+  capability marquee (technology/service tags — not fabricated client logos), gradient
+  glow-border card hovers, and scroll-linked parallax on the CIMA Biz AI panel.
 
 ### Pages Built
 
@@ -154,6 +159,11 @@ files:
   content could theoretically stay invisible if the observer never fires (e.g. some automated
   renderers). A 4-second safety-net timeout force-reveals anything not yet visible, so no
   content is ever permanently hidden regardless of environment.
+- Verified the new logo glyph: the vertical stroke of the "K" has zero geometric bounding-box
+  width, and an SVG gradient using the default `objectBoundingBox` units resolves per-element,
+  not per-group — so Chromium silently failed to paint that one stroke (the K rendered as a
+  checkmark, missing its stem). Fixed by switching the gradient to `userSpaceOnUse` coordinates
+  shared across all three strokes.
 - `preview/demo.html` verified separately in a real browser: no console errors, animations,
   scroll reveal and the mobile nav overlay all confirmed working.
 

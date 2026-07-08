@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 const features = [
   'AI-powered operations automation',
@@ -10,8 +12,12 @@ const features = [
 ];
 
 const CimaHighlight = () => {
+  const sectionRef = useRef(null);
+  const { scrollYProgress } = useScroll({ target: sectionRef, offset: ['start end', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [-26, 26]);
+
   return (
-    <section className="kt-section">
+    <section className="kt-section" ref={sectionRef}>
       <div className="kt-container">
         <div className="kt-cima">
           <div className="kt-split">
@@ -33,7 +39,7 @@ const CimaHighlight = () => {
               </Link>
             </div>
 
-            <div className="kt-cima-mock">
+            <motion.div className="kt-cima-mock" style={{ y }}>
               <div className="mock-head"><span></span><span></span><span></span></div>
               <div className="mock-row"><span>Workflow Automation</span><b>Active</b></div>
               <div className="mock-row"><span>AI Decision Engine</span><b>Processing</b></div>
@@ -46,7 +52,7 @@ const CimaHighlight = () => {
                 <span style={{ height: '60%' }}></span>
                 <span style={{ height: '95%' }}></span>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </div>
