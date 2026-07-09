@@ -216,7 +216,7 @@ Once your final domain is confirmed, update:
 |---|---|---|
 | Home | `index.html` | Hero, capability marquee, trust section, services, CIMA Biz AI highlight, outsourcing, ready-made, why-choose-us, CTA |
 | About | `about.html` | Company story, values, delivery model, Team section |
-| Services | `services.html` | All 15 services + delivery process |
+| Services | `services.html` | All 16 services + delivery process |
 | CIMA Biz AI | `cima-biz-ai.html` | Flagship product page |
 | Outsourcing | `outsourcing.html` | IT/team outsourcing, links to Careers |
 | Ready-Made Solutions | `ready-made-solutions.html` | Pre-built foundations |

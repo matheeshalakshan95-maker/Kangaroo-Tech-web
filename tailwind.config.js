@@ -1,12 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./*.html', './assets/js/**/*.js'],
+  content: ['./*.html', './assets/js/**/*.js', './build/**/*.mjs'],
   theme: {
     extend: {
       colors: {
         navy: { DEFAULT: '#0a1a3c', 700: '#122a63' },
         purple: { DEFAULT: '#7c3aed', vivid: '#9b3ffb' },
         blue: { DEFAULT: '#0b5fff', light: '#4c8cff' },
+        cyan: { DEFAULT: '#22d3ee', light: '#67e8f9' },
         green: { DEFAULT: '#159c5f', dark: '#128a54' },
         ink: '#10192e',
         muted: '#5b6478',
@@ -49,6 +50,15 @@ export default {
           '100%': { strokeDashoffset: '-130', opacity: '0' },
         },
         rise: { from: { opacity: '0', transform: 'translateY(20px)' }, to: { opacity: '1', transform: 'translateY(0)' } },
+        'float-slow': {
+          '0%, 100%': { transform: 'translateY(0) translateX(0)' },
+          '50%': { transform: 'translateY(-16px) translateX(8px)' },
+        },
+        'pulse-glow': {
+          '0%, 100%': { opacity: '0.55', transform: 'scale(1)' },
+          '50%': { opacity: '0.9', transform: 'scale(1.08)' },
+        },
+        'spin-slow': { to: { transform: 'rotate(360deg)' } },
       },
       animation: {
         'gradient-drift': 'gradient-drift 14s ease-in-out infinite',
@@ -59,6 +69,9 @@ export default {
         shimmer: 'text-shimmer 6s linear infinite',
         marquee: 'marquee-scroll 32s linear infinite',
         swoosh: 'swoosh-draw 2.2s ease-out infinite',
+        'float-slow': 'float-slow 7s ease-in-out infinite',
+        'pulse-glow': 'pulse-glow 4s ease-in-out infinite',
+        'spin-slow': 'spin-slow 18s linear infinite',
       },
     },
   },

@@ -1,4 +1,4 @@
-import { pageHeader } from '../components.mjs';
+import { pageHeader, sectionHead } from '../components.mjs';
 
 const contactCard = (icon, title, valueHtml) => `
 <div class="card card-compact mb-4">
@@ -8,10 +8,32 @@ const contactCard = (icon, title, valueHtml) => `
   </div>
 </div>`;
 
+const inquiryTypes = [
+  ['bi-window-stack', 'Website Project', 'A new website, redesign or web application.', 'Website Design & Development'],
+  ['bi-cloud-arrow-up', 'Software / SaaS Project', 'Custom software or a SaaS product build.', 'SaaS Application Development'],
+  ['bi-cpu', 'AI Integration', 'Automation or AI added to your existing systems.', 'AI Integration for Existing Businesses'],
+  ['bi-people', 'Outsourcing an IT Team', 'A dedicated or fully outsourced technology team.', 'IT Department Outsourcing'],
+  ['bi-megaphone', 'Marketing Support', 'SEO, Google Ads or a broader digital marketing plan.', 'Digital Marketing'],
+];
+const inquiryCard = ([icon, title, desc, service]) => `
+<button type="button" class="inquiry-card" data-inquiry-service="${service}">
+  <div class="card-icon"><i class="bi ${icon}"></i></div>
+  <div><h5>${title}</h5><p>${desc}</p></div>
+</button>`;
+
 const body = `
 ${pageHeader('Contact Us', 'Contact')}
 
-<section class="section">
+<section class="section-sm">
+  <div class="container-site">
+    ${sectionHead({ eyebrow: 'Start Here', heading: 'What Are You Looking to Build?', sub: 'Select the option closest to your need and we will pre-fill the enquiry form below — or simply fill in the form directly.' })}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4 reveal">
+      ${inquiryTypes.map(inquiryCard).join('\n      ')}
+    </div>
+  </div>
+</section>
+
+<section class="section pt-0">
   <div class="container-site">
     <div class="split">
       <div>
@@ -64,6 +86,7 @@ ${pageHeader('Contact Us', 'Contact')}
               <option>Freelance Developer Support</option>
               <option>Business Process Automation</option>
               <option>Ready-Made Websites &amp; Software Solutions</option>
+              <option>CIMA Biz AI</option>
               <option>Other / Not Sure Yet</option>
             </select>
           </div>

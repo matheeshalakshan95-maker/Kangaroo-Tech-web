@@ -1,4 +1,4 @@
-import { sectionHead, ctaPanel, checkIcon } from '../components.mjs';
+import { sectionHead, ctaPanel, checkIcon, chunk, carousel, serviceCard } from '../components.mjs';
 
 const capabilities = [
   ['bi-window-stack', 'Website Development'],
@@ -32,7 +32,58 @@ const featuredServices = [
   ['bi-palette', 'UI/UX Design', 'Clean, conversion-focused interface design grounded in real user research.'],
   ['bi-megaphone', 'Digital Marketing', 'Data-driven marketing strategy across the channels that matter to your business.'],
   ['bi-people', 'IT Department Outsourcing', 'A full outsourced IT team, managed under Australian business standards.'],
+  ['bi-stars', 'CIMA Biz AI', 'Our flagship AI-powered SaaS platform for operations automation and analytics.'],
 ];
+
+const featuredServiceCards = featuredServices.map(([icon, title, desc]) =>
+  serviceCard(icon, title, desc, {
+    linkHref: title === 'CIMA Biz AI' ? 'cima-biz-ai.html' : 'services.html',
+    linkLabel: title === 'CIMA Biz AI' ? 'Explore the platform' : 'Learn more',
+  }));
+const serviceSlides = chunk(featuredServiceCards, 3).map((group) => `<div class="grid-3">${group.join('')}</div>`);
+
+const featuredProjects = [
+  ['bi-cart3', 'Retail E-Commerce Platform', 'Website & Software Development', 'linear-gradient(135deg, #0a1a3c, #0b5fff)'],
+  ['bi-heart-pulse', 'Healthcare Booking & Patient Management', 'SaaS Application Development', 'linear-gradient(135deg, #0d2150, #159c5f)'],
+  ['bi-truck', 'Logistics Operations Dashboard', 'AI Business Automation', 'linear-gradient(135deg, #122a63, #4c8cff)'],
+  ['bi-phone', 'Hospitality Booking Mobile App', 'Mobile App Development', 'linear-gradient(135deg, #0a1a3c, #159c5f)'],
+  ['bi-briefcase', 'Professional Services Website', 'Website Design & UI/UX', 'linear-gradient(135deg, #0b5fff, #0a1a3c)'],
+  ['bi-houses', 'Real Estate Listing Platform', 'Full Stack Development', 'linear-gradient(135deg, #0d2150, #4c8cff)'],
+];
+const projectPreviewCard = ([icon, title, category, color]) => `
+<a href="projects.html" class="project-card block">
+  <div class="project-thumb" style="background:${color};">
+    <span class="tag">Sample Concept</span>
+    <i class="bi ${icon}"></i>
+  </div>
+  <div class="project-body">
+    <span class="tag-pill">${category}</span>
+    <h4>${title}</h4>
+    <p class="card-link card-link-static">View case study <i class="bi bi-arrow-right"></i></p>
+  </div>
+</a>`;
+const projectSlides = chunk(featuredProjects, 3).map((group) =>
+  `<div class="grid-3">${group.map(projectPreviewCard).join('')}</div>`);
+
+const highlights = [
+  ['bi-window-stack', 'Website Engagement', 'Scope, timeline and cost were agreed up front, so there were no surprises once development started.'],
+  ['bi-code-slash', 'Software Engagement', 'One Australian point of contact made it simple to work with a development team based overseas.'],
+  ['bi-cpu', 'AI Automation Engagement', 'Automating manual reporting freed up hours of operational time every week.'],
+  ['bi-people', 'IT Outsourcing Engagement', 'Handing over the IT function felt like gaining a team, not losing control of it.'],
+  ['bi-cloud-arrow-up', 'SaaS Engagement', 'Regular updates and clear documentation kept a non-technical stakeholder confidently in the loop.'],
+  ['bi-box-seam', 'Ready-Made Solution Engagement', 'A ready-made foundation reached launch in weeks rather than months, without looking templated.'],
+];
+const highlightCard = ([icon, role, quote]) => `
+<div class="highlight-card">
+  <div class="stars"><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i></div>
+  <p class="quote">&ldquo;${quote}&rdquo;</p>
+  <div class="who">
+    <span class="avatar"><i class="bi ${icon}"></i></span>
+    <div><h5>${role}</h5><span>Illustrative engagement standard</span></div>
+  </div>
+</div>`;
+const highlightSlides = chunk(highlights, 3).map((group) =>
+  `<div class="grid-3">${group.map(highlightCard).join('')}</div>`);
 
 const whyItems = [
   ['Cost-Effective Development', 'Sri Lankan delivery reduces development cost while maintaining Australian quality benchmarks.'],
@@ -56,15 +107,20 @@ const body = `
     <div class="split">
       <div>
         <span class="hero-eyebrow"><span class="w-1.5 h-1.5 rounded-full bg-green inline-block"></span>&nbsp;Australia &bull; Sri Lanka Technology Partnership</span>
-        <h1>Build Smarter Digital Solutions with <span class="shimmer">KANGARO TECH</span></h1>
-        <p class="lead">Australian-standard software, AI, SaaS, web development and digital marketing powered by expert Sri Lankan technology teams.</p>
+        <h1>Build Smarter, Scale Faster with <span class="shimmer">KANGARO TECH</span></h1>
+        <p class="lead">Australian-standard software, AI, SaaS, web development and digital marketing &mdash; engineered by expert teams across Australia and Sri Lanka.</p>
         <div class="hero-actions">
           <a href="contact.html" class="btn btn-primary">Get a Free Consultation <i class="bi bi-arrow-right"></i></a>
           <a href="services.html" class="btn btn-outline">Explore Our Services</a>
         </div>
+        <div class="hero-trust">
+          <span class="trust-chip"><i class="bi bi-globe-asia-australia"></i>Australia + Sri Lanka Delivery</span>
+          <span class="trust-chip"><i class="bi bi-building"></i>Under CIMA Group Pty Ltd</span>
+          <span class="trust-chip"><i class="bi bi-stars"></i>AI &middot; Web &middot; Software &middot; Outsourcing</span>
+        </div>
         <div class="hero-stats">
           <div class="stat"><h3 data-count="2">0</h3><span>Countries, one delivery standard</span></div>
-          <div class="stat"><h3 data-count="15" data-suffix="+">0</h3><span>Core service lines</span></div>
+          <div class="stat"><h3 data-count="16" data-suffix="+">0</h3><span>Core service lines</span></div>
           <div class="stat"><h3>AI-Ready</h3><span>Built for automation from day one</span></div>
         </div>
       </div>
@@ -101,12 +157,12 @@ const body = `
 
 <section class="section bg-surface-50">
   <div class="container-site">
-    ${sectionHead({ eyebrow: 'What We Do', heading: 'Full-Spectrum Technology &amp; Marketing Services', sub: 'From web and software to AI automation and digital marketing, KANGARO TECH covers every capability an Australian business needs to grow.' })}
-    <div class="grid-3">
-      ${featuredServices.map(([icon, title, desc]) => `<div class="card reveal"><div class="card-icon"><i class="bi ${icon}"></i></div><h3>${title}</h3><p>${desc}</p></div>`).join('\n      ')}
+    ${sectionHead({ eyebrow: 'What We Do', heading: 'Full-Spectrum Technology &amp; Marketing Services', sub: 'From web and software to AI automation and digital marketing, KANGARO TECH covers every capability an Australian business needs to grow. Browse our core service lines below.' })}
+    <div class="reveal">
+      ${carousel({ ariaLabel: 'Core services', autoplay: 6500, slidesHtml: serviceSlides })}
     </div>
     <div class="text-center mt-10">
-      <a href="services.html" class="btn btn-navy">View All 15 Services <i class="bi bi-arrow-right"></i></a>
+      <a href="services.html" class="btn btn-navy">View All 16 Services <i class="bi bi-arrow-right"></i></a>
     </div>
   </div>
 </section>
@@ -193,6 +249,30 @@ const body = `
 </section>
 
 <section class="section bg-surface-50">
+  <div class="container-site">
+    ${sectionHead({ eyebrow: 'Representative Work', heading: 'Featured Projects', sub: 'A preview of the kind of websites, software and AI-driven builds our team is equipped to deliver. Visit our Projects &amp; Case Studies page for the full challenge, approach and outcome behind each concept.' })}
+    <div class="reveal">
+      ${carousel({ ariaLabel: 'Featured projects', autoplay: 7000, slidesHtml: projectSlides })}
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container-site">
+    <div class="cima-panel reveal">
+      <div class="relative z-[1]">
+        <div class="sample-note on-dark mb-8">
+          <i class="bi bi-info-circle-fill"></i>
+          <span>The highlights below reflect the standards we hold ourselves to on every engagement. As we complete more Australian client projects, verified testimonials will replace these illustrative highlights.</span>
+        </div>
+        ${sectionHead({ eyebrow: 'Engagement Standards', heading: 'What Working With Us Looks Like', dark: true })}
+        ${carousel({ ariaLabel: 'Engagement highlights', autoplay: 7500, onDark: true, slidesHtml: highlightSlides })}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
   <div class="container-site">
     <div class="split reveal">
       <div>

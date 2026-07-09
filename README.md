@@ -8,6 +8,41 @@ teams based in **Sri Lanka**.
 no build step required to run the site — every page is a real, complete `.html` file you can
 open directly or upload to any host as-is.
 
+## Premium UI/UX Upgrade (Latest)
+
+The site was audited against a premium SaaS/technology-brand visual bar (Soule Tech was used as a
+*visual quality reference only* — no Soule Tech branding, copy, or assets were copied) and upgraded
+in place without breaking any existing page, route or SEO metadata. See `QA_REPORT.md` for the full
+test log. Summary of what changed:
+
+- **Header** — glassmorphism blur + shadow on scroll (`.site-header.is-scrolled`), animated
+  mobile-menu overlay with a staggered link entrance.
+- **Buttons** — every `.btn` now has an arrow micro-interaction, a directional glow on hover, and a
+  subtle press-scale; a new `.btn-glass` variant for dark panels.
+- **Carousels** — a new dependency-free, accessible carousel (`assets/js/main.js` → `initCarousel`)
+  with autoplay, prev/next arrows, dot pagination, swipe support, pause-on-hover/focus, keyboard
+  arrow-key navigation and full `prefers-reduced-motion` support. Used on the Home page for the
+  core-services grid, a featured-projects preview, and a new "Engagement Standards" highlights
+  panel (see note below on why this isn't a fabricated testimonials carousel).
+- **Cards** — service cards gained a hover-revealed "Learn more" arrow-link
+  (`build/components.mjs` → `serviceCard()`); Services page now lists **16** service lines
+  (added CIMA Biz AI as its own card).
+- **Contact page** — five new "inquiry" cards (Website / Software & SaaS / AI Integration /
+  Outsourcing / Marketing) that pre-select the enquiry-type dropdown and scroll/focus the form.
+- **404 page** — rebuilt on the same hero treatment as the rest of the site (gradient, blobs,
+  spotlight) instead of a bare centred message.
+- **Motion system** — new keyframes (`float-slow`, `pulse-glow`, `spin-slow`) and an ambient blob
+  added to every `.page-header`, so interior pages carry the same premium motion language as Home.
+- **Careers page** — was previously missing a closing CTA panel; now ends with one, consistent
+  with every other page.
+
+**Content-integrity note:** the brief asked for a "testimonial carousel." The project's existing
+rule (set earlier in this build) is no fabricated client names, quotes or case studies. Rather than
+invent fake clients, the highlights carousel is explicitly labelled "Engagement Standards" with a
+visible disclosure that it shows illustrative commitments, not verbatim client quotes — the same
+pattern already used on the Projects page for sample case studies. Swap in real testimonials via
+`build/pages/home.mjs` → `highlights` as they become available (see `QA_REPORT.md`).
+
 ## What This Repository Contains
 
 The site was originally built as a React (Vite) single-page app, then rebuilt from the ground up
@@ -21,7 +56,7 @@ full operating manual (deployment steps, content-editing guide, pre-launch check
 |---|---|
 | `index.html` | Home — hero, capability marquee, trust section, services overview, CIMA Biz AI highlight, outsourcing, ready-made, why-choose-us, CTA |
 | `about.html` | About KANGARO TECH — company story, values, delivery model, Team section |
-| `services.html` | All 15 services + delivery process |
+| `services.html` | All 16 services + delivery process |
 | `cima-biz-ai.html` | Flagship SaaS product page |
 | `outsourcing.html` | IT/team outsourcing, links to Careers |
 | `ready-made-solutions.html` | Ready-made website/software foundations |

@@ -1,4 +1,4 @@
-import { pageHeader, sectionHead } from '../components.mjs';
+import { pageHeader, sectionHead, ctaPanel } from '../components.mjs';
 
 const opportunities = [
   ['bi-person-workspace', 'Freelance / Contract Projects', 'Short-term and project-based work across web, software, design and marketing, alongside our core delivery team.'],
@@ -102,6 +102,14 @@ ${pageHeader('Freelance & Career Opportunities', 'Careers')}
     </div>
   </div>
 </section>
+
+${ctaPanel({
+  title: 'Have a Project Instead of a CV to Share?',
+  text: 'If you are a business looking to build or outsource, rather than join our delivery network, talk to us about your project.',
+  primaryLabel: 'Start a Project',
+  secondaryLabel: 'Explore Outsourcing',
+  secondaryHref: 'outsourcing.html',
+})}
 `;
 
 export default {

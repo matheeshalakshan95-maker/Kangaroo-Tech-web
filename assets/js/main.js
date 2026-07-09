@@ -151,6 +151,149 @@
   }
 
   /* ---------------------------------------------------------------------
+   * Sticky header glassmorphism on scroll
+   * ------------------------------------------------------------------- */
+  function initHeaderScroll() {
+    var header = document.querySelector('.site-header');
+    if (!header) return;
+    function update() {
+      header.classList.toggle('is-scrolled', window.scrollY > 12);
+    }
+    update();
+    window.addEventListener('scroll', update, { passive: true });
+  }
+
+  /* ---------------------------------------------------------------------
+   * Generic accessible carousel
+   * Markup contract: [data-carousel] > .carousel-viewport > [data-carousel-track] > [data-carousel-slide] (repeated)
+   * Optional: [data-carousel-prev], [data-carousel-next], [data-carousel-dots]
+   * Options via data attributes: data-autoplay="6000" (ms, omit to disable)
+   * ------------------------------------------------------------------- */
+  function initCarousel(root) {
+    var track = root.querySelector('[data-carousel-track]');
+    var slides = Array.prototype.slice.call(root.querySelectorAll('[data-carousel-slide]'));
+    var viewport = root.querySelector('.carousel-viewport');
+    var prevBtn = root.querySelector('[data-carousel-prev]');
+    var nextBtn = root.querySelector('[data-carousel-next]');
+    var dotsWrap = root.querySelector('[data-carousel-dots]');
+    if (!track || slides.length === 0) return;
+
+    var index = 0;
+    var autoplayDelay = parseInt(root.getAttribute('data-autoplay') || '0', 10);
+    var timer = null;
+    var dots = [];
+
+    if (dotsWrap) {
+      slides.forEach(function (_, i) {
+        var dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = 'carousel-dot';
+        dot.setAttribute('aria-label', 'Go to slide ' + (i + 1));
+        dot.addEventListener('click', function () { goTo(i, true); });
+        dotsWrap.appendChild(dot);
+        dots.push(dot);
+      });
+    }
+
+    function updateHeight() {
+      if (!viewport || !slides[index]) return;
+      viewport.style.height = slides[index].offsetHeight + 'px';
+    }
+
+    function render() {
+      track.style.transform = 'translateX(-' + (index * 100) + '%)';
+      dots.forEach(function (d, i) { d.classList.toggle('active', i === index); });
+      if (prevBtn) prevBtn.disabled = slides.length < 2 ? true : false;
+      if (nextBtn) nextBtn.disabled = slides.length < 2 ? true : false;
+      slides.forEach(function (s, i) { s.setAttribute('aria-hidden', i === index ? 'false' : 'true'); });
+      updateHeight();
+    }
+
+    function goTo(i, userInitiated) {
+      index = (i + slides.length) % slides.length;
+      render();
+      if (userInitiated) restartAutoplay();
+    }
+
+    function next(userInitiated) { goTo(index + 1, userInitiated); }
+    function prev(userInitiated) { goTo(index - 1, userInitiated); }
+
+    function startAutoplay() {
+      if (!autoplayDelay || prefersReduced || slides.length < 2) return;
+      timer = window.setInterval(function () { next(false); }, autoplayDelay);
+    }
+    function stopAutoplay() {
+      if (timer) { window.clearInterval(timer); timer = null; }
+    }
+    function restartAutoplay() { stopAutoplay(); startAutoplay(); }
+
+    if (nextBtn) nextBtn.addEventListener('click', function () { next(true); });
+    if (prevBtn) prevBtn.addEventListener('click', function () { prev(true); });
+
+    root.addEventListener('mouseenter', stopAutoplay);
+    root.addEventListener('mouseleave', startAutoplay);
+    root.addEventListener('focusin', stopAutoplay);
+    root.addEventListener('focusout', startAutoplay);
+
+    root.setAttribute('tabindex', '0');
+    root.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowRight') { next(true); }
+      else if (e.key === 'ArrowLeft') { prev(true); }
+    });
+
+    var touchStartX = null;
+    if (viewport) {
+      viewport.addEventListener('touchstart', function (e) {
+        touchStartX = e.touches[0].clientX;
+        stopAutoplay();
+      }, { passive: true });
+      viewport.addEventListener('touchend', function (e) {
+        if (touchStartX === null) return;
+        var dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) { dx < 0 ? next(true) : prev(true); }
+        else { startAutoplay(); }
+        touchStartX = null;
+      });
+    }
+
+    window.addEventListener('resize', updateHeight);
+    render();
+    startAutoplay();
+  }
+
+  function initCarousels() {
+    Array.prototype.forEach.call(document.querySelectorAll('[data-carousel]'), initCarousel);
+  }
+
+  /* ---------------------------------------------------------------------
+   * Contact / careers inquiry cards — pre-select the enquiry-type dropdown
+   * ------------------------------------------------------------------- */
+  function initInquiryCards() {
+    var cards = Array.prototype.slice.call(document.querySelectorAll('[data-inquiry-service]'));
+    if (cards.length === 0) return;
+    var select = document.getElementById('c-service');
+
+    cards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        cards.forEach(function (c) { c.classList.remove('is-selected'); });
+        card.classList.add('is-selected');
+        var value = card.getAttribute('data-inquiry-service');
+        if (select) {
+          Array.prototype.forEach.call(select.options, function (opt) {
+            if (opt.value === value || opt.textContent.trim() === value) select.value = opt.value;
+          });
+        }
+        var form = document.getElementById('contactForm');
+        if (form) {
+          form.scrollIntoView({ behavior: prefersReduced ? 'auto' : 'smooth', block: 'center' });
+          var nameField = document.getElementById('c-name');
+          if (nameField) window.setTimeout(function () { nameField.focus(); }, prefersReduced ? 0 : 450);
+        }
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------------------
    * CIMA mock panel scroll parallax
    * ------------------------------------------------------------------- */
   function initCimaParallax() {
@@ -275,6 +418,9 @@
     initCounters();
     initHeroBar();
     initHeroInteraction();
+    initHeaderScroll();
+    initCarousels();
+    initInquiryCards();
     initCimaParallax();
     initProjectCaseStudies();
     initContactForm();
