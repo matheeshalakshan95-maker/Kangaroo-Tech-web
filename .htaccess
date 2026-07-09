@@ -1,0 +1,12 @@
+# Custom 404 page
+ErrorDocument 404 /404.html
+
+# Cache static assets aggressively; never cache the HTML pages themselves
+<IfModule mod_headers.c>
+  <FilesMatch "\.(js|css|svg|png|jpg|jpeg|webp|woff|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache"
+  </FilesMatch>
+</IfModule>
