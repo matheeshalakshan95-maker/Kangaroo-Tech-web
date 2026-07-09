@@ -9,7 +9,7 @@
   --kt-navy-700: #122a63;
   --kt-blue: #0b5fff;
   --kt-blue-light: #4c8cff;
-  --kt-green: #1fbf75;
+  --kt-green: #159c5f;
   --kt-white: #ffffff;
   --kt-grey-50: #f5f7fb;
   --kt-grey-100: #eef1f7;
@@ -115,8 +115,8 @@ button { font-family: var(--kt-font); }
 .kt-btn-navy:hover { background: var(--kt-navy-700); color: var(--kt-white); transform: translateY(-2px); }
 .kt-btn-ghost { border-color: var(--kt-grey-200); color: var(--kt-navy); }
 .kt-btn-ghost:hover { border-color: var(--kt-blue); color: var(--kt-blue); }
-.kt-btn-green { background: var(--kt-green); color: var(--kt-white); }
-.kt-btn-green:hover { background: #189a5f; color: var(--kt-white); transform: translateY(-2px); }
+.kt-btn-green { background: var(--kt-green); color: var(--kt-navy); }
+.kt-btn-green:hover { background: #128a54; color: var(--kt-navy); transform: translateY(-2px); }
 .kt-btn-block { width: 100%; }
 .kt-btn-sm { padding: 10px 20px; font-size: 14px; }
 
@@ -371,6 +371,7 @@ button { font-family: var(--kt-font); }
 .kt-footer ul li a:hover { color: #fff; }
 .kt-footer-contact li { display: flex; gap: 10px; align-items: flex-start; font-size: 14.5px; }
 .kt-footer-contact li i { color: var(--kt-blue-light); margin-top: 3px; }
+.kt-footer-contact li a:hover { color: #fff; }
 .kt-footer-bottom { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; font-size: 13.5px; flex-wrap: wrap; gap: 10px; }
 .kt-footer-social { display: flex; gap: 10px; }
 .kt-footer-social a { width: 36px; height: 36px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; color: #fff; }
@@ -390,7 +391,10 @@ button { font-family: var(--kt-font); }
   color: var(--kt-text);
   transition: border-color .15s ease;
 }
-.kt-form-control:focus { outline: none; border-color: var(--kt-blue); }
+.kt-form-control:focus { outline: none; border-color: var(--kt-blue); box-shadow: 0 0 0 3px rgba(11,95,255,0.22); }
+.kt-btn:focus-visible, .kt-nav-desktop a:focus-visible, .kt-mobile-nav nav a:focus-visible, .kt-menu-toggle:focus-visible {
+  outline: 2px solid var(--kt-blue); outline-offset: 2px;
+}
 .kt-form-control.error { border-color: #e34848; }
 .kt-error-text { color: #e34848; font-size: 12.5px; margin-top: 6px; }
 textarea.kt-form-control { resize: vertical; min-height: 140px; }

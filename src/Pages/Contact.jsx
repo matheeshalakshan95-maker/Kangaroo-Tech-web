@@ -27,7 +27,7 @@ const Contact = () => {
                   <div className="kt-card-icon" style={{ marginBottom: 0 }}><i className="bi bi-envelope"></i></div>
                   <div>
                     <h4 style={{ marginBottom: 2 }}>Email</h4>
-                    <p style={{ margin: 0 }}>hello@kangarotech.com.au</p>
+                    <p style={{ margin: 0 }}><a href="mailto:hello@kangarotech.com.au" style={{ color: 'inherit' }}>hello@kangarotech.com.au</a></p>
                   </div>
                 </div>
               </div>
@@ -37,7 +37,7 @@ const Contact = () => {
                   <div className="kt-card-icon" style={{ marginBottom: 0 }}><i className="bi bi-telephone"></i></div>
                   <div>
                     <h4 style={{ marginBottom: 2 }}>Phone</h4>
-                    <p style={{ margin: 0 }}>+61 XXX XXX XXX</p>
+                    <p style={{ margin: 0 }}><a href="tel:+61XXXXXXXXX" style={{ color: 'inherit' }}>+61 XXX XXX XXX</a></p>
                   </div>
                 </div>
               </div>

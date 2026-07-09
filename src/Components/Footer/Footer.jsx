@@ -47,8 +47,8 @@ const Footer = () => {
           <div>
             <h5>Get in Touch</h5>
             <ul className="kt-footer-contact">
-              <li><i className="bi bi-envelope"></i><span>hello@kangarotech.com.au</span></li>
-              <li><i className="bi bi-telephone"></i><span>+61 XXX XXX XXX</span></li>
+              <li><i className="bi bi-envelope"></i><a href="mailto:hello@kangarotech.com.au">hello@kangarotech.com.au</a></li>
+              <li><i className="bi bi-telephone"></i><a href="tel:+61XXXXXXXXX">+61 XXX XXX XXX</a></li>
               <li><i className="bi bi-geo-alt"></i><span>Adelaide, South Australia, Australia</span></li>
               <li><i className="bi bi-geo-alt"></i><span>Colombo, Sri Lanka</span></li>
             </ul>

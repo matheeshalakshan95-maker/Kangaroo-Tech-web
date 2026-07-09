@@ -188,6 +188,35 @@ files:
 - `preview/demo.html` verified separately in a real browser: no console errors, animations,
   scroll reveal and the mobile nav overlay all confirmed working.
 
+## Code Audit & Production-Readiness Pass
+
+A full audit was done across the codebase (bugs, accessibility, SEO, security, dead code). Real
+issues found and fixed:
+
+- **Accessibility — button contrast:** `.kt-btn-green` used white text on a light green
+  background (2.4:1 contrast — fails WCAG AA). Fixed by darkening the green token
+  (`--kt-green: #159c5f`, chosen so it also clears the 3:1 non-text minimum for the small
+  checkmark icons that reuse it) and switching button text to navy (4.86–7.15:1 depending on
+  state).
+- **Accessibility — focus states:** `.kt-form-control:focus` removed the default outline with no
+  replacement. Added a visible focus ring (`box-shadow`) on form fields, and explicit
+  `:focus-visible` outlines on nav links, buttons and the mobile menu toggle.
+- **Missing `mailto:`/`tel:` links:** the email and phone number in the footer and on the
+  Contact page were plain text — not clickable/tappable. Fixed.
+- **No SEO/production essentials:** the site had no `robots.txt`, `sitemap.xml`, Open Graph/
+  Twitter meta tags, canonical URLs, or structured data — all added. `Seo.jsx` now also updates
+  canonical/OG/Twitter tags per route, not just the title/description.
+- **No SPA hosting fallback config:** without one, every route except `/` returns a 404 on most
+  static hosts. Added `public/_redirects` (Netlify), `public/.htaccess` (Apache/cPanel), and
+  `vercel.json` (Vercel) — verified all three survive the `npm run build` output.
+- **Favicon/social preview gaps:** added PNG favicon fallbacks (16×16, 32×32), an
+  `apple-touch-icon.png`, a `manifest.webmanifest`, and a branded `og-image.png` (1200×630) for
+  link previews on social platforms.
+
+See `HANDBOOK.md` for the full pre-launch checklist (what still needs a human decision — real
+contact details, the contact form's backend, final domain, etc.), deployment instructions per
+host, and a guide to making everyday content changes.
+
 ## Remaining Recommendations
 
 1. **Contact form backend**: the form currently validates client-side and shows a success
