@@ -1,6 +1,16 @@
+import { Link } from 'react-router-dom';
 import Seo from '../Components/Common/Seo';
 import PageHeader from '../Components/Common/PageHeader';
 import CtaSection from '../Components/Common/CtaSection';
+
+const teamFunctions = [
+  { icon: 'bi-code-slash', title: 'Software Engineering', desc: 'Full-stack developers building websites, software and SaaS platforms.' },
+  { icon: 'bi-cpu-fill', title: 'AI & Automation', desc: 'Engineers focused on AI integration, automation and the CIMA Biz AI platform.' },
+  { icon: 'bi-palette2', title: 'UI/UX Design', desc: 'Designers responsible for product experience, branding and interface design.' },
+  { icon: 'bi-bug', title: 'Quality Assurance', desc: 'Dedicated QA to test and validate every release against Australian standards.' },
+  { icon: 'bi-megaphone-fill', title: 'Digital Marketing', desc: 'SEO, Google Ads and campaign specialists driving measurable results.' },
+  { icon: 'bi-kanban-fill', title: 'Project Coordination', desc: 'Coordinators keeping delivery on schedule and communication clear.' },
+];
 
 const values = [
   {
@@ -137,6 +147,70 @@ const About = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="kt-section kt-bg-grey">
+        <div className="kt-container">
+          <div className="kt-section-head text-center">
+            <span className="kt-eyebrow"><span className="dot"></span>Our Team</span>
+            <h2 className="kt-heading">A Growing Team Across Two Countries</h2>
+            <p className="kt-subheading">
+              KANGARO TECH is a growing company. Rather than a single office, we operate as
+              functional teams spanning Australia and Sri Lanka, each responsible for a specific
+              part of delivery.
+            </p>
+          </div>
+
+          <div className="kt-split" style={{ marginBottom: 48 }}>
+            <div className="kt-media-frame dark">
+              <span className="kt-tag-pill" style={{ background: 'rgba(255,255,255,0.1)', color: '#fff' }}>Australia</span>
+              <div className="tile">
+                <div className="tile-row">
+                  <div className="tile-icon"><i className="bi bi-person-badge"></i></div>
+                  <div><h5>Client Partnership &amp; Governance</h5><p>Business alignment and account management</p></div>
+                </div>
+              </div>
+              <div className="tile">
+                <div className="tile-row">
+                  <div className="tile-icon"><i className="bi bi-clipboard-check"></i></div>
+                  <div><h5>Project Oversight</h5><p>Quality standards and reporting</p></div>
+                </div>
+              </div>
+            </div>
+            <div className="kt-media-frame">
+              <span className="kt-tag-pill">Sri Lanka</span>
+              <div className="tile">
+                <div className="tile-row">
+                  <div className="tile-icon"><i className="bi bi-terminal"></i></div>
+                  <div><h5>Engineering &amp; Delivery</h5><p>Development, AI, design and QA teams</p></div>
+                </div>
+              </div>
+              <div className="tile">
+                <div className="tile-row">
+                  <div className="tile-icon"><i className="bi bi-graph-up-arrow"></i></div>
+                  <div><h5>Marketing &amp; Support</h5><p>Campaign execution and ongoing support</p></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="kt-grid-3">
+            {teamFunctions.map((t) => (
+              <div className="kt-card" key={t.title}>
+                <div className="kt-card-icon"><i className={`bi ${t.icon}`}></i></div>
+                <h4>{t.title}</h4>
+                <p>{t.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="text-center" style={{ marginTop: 36 }}>
+            <p style={{ marginBottom: 18 }}>Interested in joining our Sri Lanka-based delivery team?</p>
+            <Link to="/careers" className="kt-btn kt-btn-navy">
+              View Freelance &amp; Career Opportunities <i className="bi bi-arrow-right"></i>
+            </Link>
           </div>
         </div>
       </section>

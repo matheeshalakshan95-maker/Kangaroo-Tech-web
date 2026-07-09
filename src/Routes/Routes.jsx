@@ -8,6 +8,7 @@ import Outsourcing from '../Pages/Outsourcing';
 import ReadyMadeSolutions from '../Pages/ReadyMadeSolutions';
 import Projects from '../Pages/Projects';
 import Pricing from '../Pages/Pricing';
+import Careers from '../Pages/Careers';
 import Contact from '../Pages/Contact';
 import NotFound from '../Pages/NotFound';
 
@@ -24,6 +25,7 @@ export const router = createBrowserRouter([
       { path: 'ready-made-solutions', element: <ReadyMadeSolutions /> },
       { path: 'projects', element: <Projects /> },
       { path: 'pricing', element: <Pricing /> },
+      { path: 'careers', element: <Careers /> },
       { path: 'contact', element: <Contact /> },
       { path: '*', element: <NotFound /> },
     ],

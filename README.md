@@ -43,15 +43,36 @@ Bootstrap Icons) but with:
 | Route | Page |
 |---|---|
 | `/` | Home — hero, trust/value section, services overview, CIMA Biz AI highlight, outsourcing section, ready-made solutions section, why-choose-us, CTA |
-| `/about` | About KANGARO TECH — company story, parent company/branch structure, values, delivery model |
+| `/about` | About KANGARO TECH — company story, parent company/branch structure, values, delivery model, and a **Team** section (organised by function/location — Australia governance + Sri Lanka delivery teams — not fabricated individual staff) |
 | `/services` | All 15 services with descriptions, plus delivery process |
 | `/cima-biz-ai` | Flagship SaaS product page — capabilities, development roadmap, early-access CTA |
-| `/outsourcing` | IT/team outsourcing options, benefits, engagement steps |
+| `/outsourcing` | IT/team outsourcing options, benefits, engagement steps, plus a cross-link to `/careers` for freelancers |
 | `/ready-made-solutions` | Ready-made website/software foundations, customisation process |
-| `/projects` | Sample project concepts (clearly labelled as illustrative — no fake client names) |
+| `/projects` | **Projects & Case Studies** — sample project concepts with an expandable Challenge/Approach/Outcome breakdown per project (clearly labelled as illustrative — no fake client names) |
 | `/pricing` | Engagement models (fixed-price, dedicated team, outsourced IT department, freelance) |
+| `/careers` | **Freelance & Career Opportunities** — for Sri Lanka-based developers/designers/marketers who want to work with KANGARO TECH (distinct from `/outsourcing`, which is for clients hiring us). Opportunity types, skills sought, benefits, and an application form. Linked from the footer and the Outsourcing page rather than the primary nav, to keep the client-facing nav focused. |
 | `/contact` | Validated enquiry form + company/location/contact details |
 | `*` | 404 page |
+
+### IA Decisions (Team / Case Studies / Careers)
+
+A request to add Team, Case Studies, Freelancer Opportunities, Projects, Pricing, Outsourcing
+and Ready-Made Solutions pages was scoped as follows — most already existed; the rest were
+added or grouped rather than bolted on as extra top-level nav items:
+
+- **Projects, Pricing, Outsourcing, Ready-Made Solutions** already existed as full pages.
+- **Team** was added as a section on `/about` rather than a standalone page. The company is
+  new/growing, so it's organised by function and location (Australia governance, Sri Lanka
+  delivery) rather than individual staff — inventing named people with photos and bios would
+  violate the same "no fabricated identity" principle already applied to client names.
+- **Case Studies** were folded into `/projects` (retitled "Projects & Case Studies") as an
+  expandable Challenge/Approach/Outcome breakdown per project, instead of a separate page
+  competing for nav space with near-identical content.
+- **Freelancer/Career Opportunities** is the one genuinely new page (`/careers`) — a distinct
+  audience (talent, not clients) with its own application form. It's deliberately **not** in
+  the primary nav (which was already at 9 items and tuned to fit on one line at desktop width)
+  — it's linked from the footer and from a callout on the Outsourcing page instead, so the
+  client-facing nav stays focused.
 
 ### Compliance Notes
 

@@ -27,8 +27,9 @@ const Footer = () => {
               <li><Link to="/about">About Us</Link></li>
               <li><Link to="/services">Services</Link></li>
               <li><Link to="/cima-biz-ai">CIMA Biz AI</Link></li>
-              <li><Link to="/projects">Projects</Link></li>
+              <li><Link to="/projects">Projects &amp; Case Studies</Link></li>
               <li><Link to="/pricing">Pricing</Link></li>
+              <li><Link to="/careers">Freelance &amp; Careers</Link></li>
             </ul>
           </div>
 

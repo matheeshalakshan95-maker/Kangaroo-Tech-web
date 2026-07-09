@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import Seo from '../Components/Common/Seo';
 import PageHeader from '../Components/Common/PageHeader';
 import CtaSection from '../Components/Common/CtaSection';
@@ -113,6 +114,21 @@ const Outsourcing = () => {
                 <p>{s.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="kt-section-sm">
+        <div className="kt-container">
+          <div className="kt-sample-note" style={{ marginBottom: 0 }}>
+            <i className="bi bi-person-workspace"></i>
+            <span>
+              Are you a Sri Lanka-based developer, designer or marketer? See our{' '}
+              <Link to="/careers" style={{ fontWeight: 700, color: 'var(--kt-blue)' }}>
+                freelance and career opportunities
+              </Link>{' '}
+              to join our delivery network.
+            </span>
           </div>
         </div>
       </section>
